@@ -63,3 +63,20 @@ keymap.set("n", "<leader>cp", "<cmd>Copilot toggle<cr>", { desc = "Toggle Copilo
 -- Copy to system clipboard
 keymap.set("v", "<C-c>", '"+y', { desc = "Copy selection" })
 keymap.set("n", "<C-c>", 'gg"+yG', { desc = "Copy entire file" })
+
+-- Telescope
+keymap.set("n", "<leader>ff", function()
+	require("telescope.builtin").find_files()
+end, { desc = "Find Files" })
+
+keymap.set("n", "<leader>fg", function()
+	require("telescope.builtin").live_grep()
+end, { desc = "Live Grep" })
+
+keymap.set("n", "<leader>fb", function()
+	require("telescope.builtin").buffers()
+end, { desc = "Find Buffers" })
+
+keymap.set("n", "<leader>fh", function()
+	require("telescope.builtin").help_tags()
+end, { desc = "Help Tags" })
