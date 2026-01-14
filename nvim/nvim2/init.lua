@@ -47,3 +47,5 @@ require("lazy").setup({
 
 -- At the very end of init.lua
 -- require("config.cmdline")
+
+require("config.notify")
