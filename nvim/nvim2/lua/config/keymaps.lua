@@ -64,19 +64,50 @@ keymap.set("n", "<leader>cp", "<cmd>Copilot toggle<cr>", { desc = "Toggle Copilo
 keymap.set("v", "<C-c>", '"+y', { desc = "Copy selection" })
 keymap.set("n", "<C-c>", 'gg"+yG', { desc = "Copy entire file" })
 
+-- File explorer (non-conflicting)
+keymap.set("n", "<leader>e", ":NvimTreeFindFile<Return>", opts)
+keymap.set("n", "<leader>E", ":NvimTreeToggle<Return>", opts)
+
 -- Telescope
 keymap.set("n", "<leader>ff", function()
 	require("telescope.builtin").find_files()
-end, { desc = "Find Files" })
-
+end)
 keymap.set("n", "<leader>fg", function()
 	require("telescope.builtin").live_grep()
-end, { desc = "Live Grep" })
-
+end)
 keymap.set("n", "<leader>fb", function()
 	require("telescope.builtin").buffers()
-end, { desc = "Find Buffers" })
-
+end)
 keymap.set("n", "<leader>fh", function()
 	require("telescope.builtin").help_tags()
-end, { desc = "Help Tags" })
+end)
+
+vim.keymap.set("n", "<leader>rr", function()
+	-- Step 1: Get default word (under cursor)
+	local default_find = vim.fn.expand("<cword>")
+	if default_find == "" then
+		default_find = ""
+	end
+
+	-- Step 2: Ask user for word to find
+	local find_word = vim.fn.input("Find word: ", default_find)
+	if find_word == "" then
+		print("Cancelled")
+		return
+	end
+
+	-- Step 3: Ask for replacement
+	local replace_word = vim.fn.input("Replace '" .. find_word .. "' with: ")
+	if replace_word == "" then
+		print("No replacement given")
+		return
+	end
+
+	-- Step 4: Escape special regex characters
+	find_word = vim.fn.escape(find_word, "/")
+	replace_word = vim.fn.escape(replace_word, "\\")
+
+	-- Step 5: Perform global replace
+	vim.cmd("%s/" .. find_word .. "/" .. replace_word .. "/g")
+	print("Replaced all occurrences of '" .. find_word .. "' with '" .. replace_word .. "'")
+end, { desc = "Replace Any Word in File" })

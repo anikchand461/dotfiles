@@ -1,5 +1,5 @@
 return {
-	-- Hihglight colors
+	-- Highlight colors
 
 	{
 		"nvim-telescope/telescope.nvim",
@@ -20,12 +20,26 @@ return {
 				end,
 				desc = "Lists files in your current working directory, respects .gitignore",
 			},
-			-- ... other keymaps
+			-- ... other keymaps (you can add more here if needed)
 		},
 		config = function(_, opts)
 			local telescope = require("telescope")
 			local actions = require("telescope.actions")
 			local fb_actions = require("telescope").extensions.file_browser.actions
+
+			-- ✅ Safely initialize opts and its subtables
+			if not opts then
+				opts = {}
+			end
+			if not opts.defaults then
+				opts.defaults = {}
+			end
+			if not opts.pickers then
+				opts.pickers = {}
+			end
+			if not opts.extensions then
+				opts.extensions = {}
+			end
 
 			opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
 				wrap_results = true,
@@ -37,7 +51,8 @@ return {
 					n = {},
 				},
 			})
-			opts.pickers = {
+
+			opts.pickers = vim.tbl_deep_extend("force", opts.pickers, {
 				diagnostics = {
 					theme = "ivy",
 					initial_mode = "normal",
@@ -45,8 +60,12 @@ return {
 						preview_cutoff = 9999,
 					},
 				},
-			}
-			opts.extensions = {
+				live_grep = {
+					cwd = vim.fn.getcwd(),
+				},
+			})
+
+			opts.extensions = vim.tbl_deep_extend("force", opts.extensions, {
 				file_browser = {
 					theme = "dropdown",
 					hijack_netrw = true,
@@ -67,7 +86,8 @@ return {
 						},
 					},
 				},
-			}
+			})
+
 			telescope.setup(opts)
 			require("telescope").load_extension("fzf")
 			require("telescope").load_extension("file_browser")
