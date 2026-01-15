@@ -101,3 +101,7 @@ vim.keymap.set("n", "<leader>rr", function()
 	vim.cmd("%s/" .. find_word .. "/" .. replace_word .. "/g")
 	print("Replaced all occurrences of '" .. find_word .. "' with '" .. replace_word .. "'")
 end, { desc = "Replace Any Word in File" })
+
+
+-- Exit terminal and toggle it closed (Tmux-safe)
+vim.keymap.set("t", "<C-g>", "<C-\\><C-n>:ToggleTerm<CR>", { desc = "Toggle Terminal" })
