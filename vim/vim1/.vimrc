@@ -26,3 +26,16 @@ set mouse=a                  " Enable mouse (optional; disable if you prefer pur
 " Search smarter
 set ignorecase
 set smartcase                " Case-sensitive only if query has uppercase
+
+" Auto-close brackets: (), [], {}, <>
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
+inoremap < <<><Left>
+
+" Optional: Only auto-close if cursor is at end of line or before whitespace
+" (prevents annoying behavior inside words)
+" inoremap ( ()<Left>
+" inoremap ) <C-O>:if getline('.')[col('.')-1] == ')'<Bar>normal! l<Bar>else<Bar>normal! a)<Bar>endif<CR>
+
+" But for simplicity and reliability, stick with basic version unless you hit edge cases.
