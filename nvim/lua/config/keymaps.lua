@@ -64,10 +64,6 @@ keymap.set("n", "<leader>ff", function()
 	require("telescope.builtin").find_files()
 end, opts)
 
-keymap.set("n", "<leader>fg", function()
-	require("telescope.builtin").live_grep()
-end, opts)
-
 keymap.set("n", "<leader>fb", function()
 	require("telescope.builtin").buffers()
 end, opts)
@@ -102,6 +98,26 @@ vim.keymap.set("n", "<leader>rr", function()
 	print("Replaced all occurrences of '" .. find_word .. "' with '" .. replace_word .. "'")
 end, { desc = "Replace Any Word in File" })
 
-
 -- Exit terminal and toggle it closed (Tmux-safe)
 vim.keymap.set("t", "<C-g>", "<C-\\><C-n>:ToggleTerm<CR>", { desc = "Toggle Terminal" })
+
+-- Force Telescope live_grep for <leader>fg — LAST RESORT
+vim.api.nvim_create_autocmd("User", {
+	pattern = "VeryLazy",
+	callback = function()
+		vim.defer_fn(function()
+			-- Remove any existing mapping
+			vim.keymap.del("n", "<leader>fg", { silent = true })
+
+			-- Set Telescope live_grep
+			vim.keymap.set("n", "<leader>fg", function()
+				local ok, telescope = pcall(require, "telescope.builtin")
+				if ok then
+					telescope.live_grep()
+				else
+					vim.notify("Telescope not available", vim.log.levels.ERROR)
+				end
+			end, { desc = "Live Grep (Telescope)", noremap = true, silent = true })
+		end, 200) -- 200ms delay to ensure all plugins are loaded
+	end,
+})

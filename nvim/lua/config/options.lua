@@ -36,3 +36,15 @@ vim.opt.mouse = "a"
 
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
+
+-- Disable Treesitter for short C files (prevents highlight errors)
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.c",
+	callback = function()
+		local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+		if #lines <= 5 then
+			vim.treesitter.stop()
+			vim.b.treesitter_enabled = false
+		end
+	end,
+})
