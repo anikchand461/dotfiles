@@ -1,0 +1,87 @@
+# path 
+# ~/.config/alacritty/alacritty.toml
+
+# ---------------- WINDOW ----------------
+[window]
+opacity = 0.52
+decorations = "Buttonless"
+blur = true   # macOS only
+startup_mode = "Maximized"
+
+dimensions = { columns = 120, lines = 35 }
+
+[window.padding]
+x = 12
+y = 12
+
+# ---------------- FONT ----------------
+[font]
+size = 16
+builtin_box_drawing = true
+
+[font.normal]
+# family = "JetBrainsMono Nerd Font"
+family = "FiraCode Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "FiraCode Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "FiraCode Nerd Font Mono"
+style = "Italic"
+
+# ---------------- SCROLL ----------------
+[scrolling]
+history = 10000
+multiplier = 3
+
+# ---------------- COLORS (PURE BLACK THEME) ----------------
+[colors.primary]
+background = "#000000"
+foreground = "#e6e6e6"
+
+[colors.normal]
+black   = "#000000"
+red     = "#ff5f5f"
+green   = "#5fff87"
+yellow  = "#ffd75f"
+blue    = "#5fafff"
+magenta = "#d787ff"
+cyan    = "#5fffff"
+white   = "#d0d0d0"
+
+[colors.bright]
+black   = "#808080"
+red     = "#ff6f6f"
+green   = "#6fff9f"
+yellow  = "#ffe070"
+blue    = "#6fc1ff"
+magenta = "#e09fff"
+cyan    = "#6fffff"
+white   = "#ffffff"
+
+# ---------------- CURSOR ----------------
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+unfocused_hollow = true
+
+# ---------------- SELECTION ----------------
+[selection]
+save_to_clipboard = true
+
+# ---------------- MOUSE ----------------
+[mouse]
+hide_when_typing = true
+
+# ---------------- KEYBOARD ----------------
+[keyboard]
+bindings = [
+  { key = "F", mods = "Command|Control", action = "ToggleFullscreen" }
+]
+
+# ---------------- PERFORMANCE ----------------
+[env]
+TERM = "xterm-256color"
+
