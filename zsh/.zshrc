@@ -35,15 +35,23 @@ export LSCOLORS=Gxfxcxdxbxegedabagacad
 DISABLE_VCS_PROMPT=true
 DEFAULT_USER=$(whoami)
 
-alias startmysql="mysql -u root -p"
 export COPYFILE_DISABLE=1
 
 # Added by Windsurf
 export PATH="/Users/anikchand/.codeium/windsurf/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
+# eval "$(pyenv init --path)"
+# eval "$(pyenv init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+pyenv() {
+  unset -f pyenv
+  eval "$(command pyenv init -)"
+  pyenv "$@"
+}
+
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$HOME/Library/Python/3.10/bin:$PATH"
@@ -127,9 +135,12 @@ cpprun() {
   g++ -Wall -Wextra -std=c++17 -o out "$1" && ./out && rm out
 }
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm() {
+  unset -f nvm
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
 
 # pnpm
 export PNPM_HOME="/Users/anikchand/Library/pnpm"
@@ -143,10 +154,10 @@ source /Users/anikchand/.config/broot/launcher/bash/br
 
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$PATH:$HOME/.nvm/versions/node/$(nvm version)/bin"
-export PATH="$PATH:/Users/anikchand/.nvm/versions/node/v20.19.0/bin"
+# export PATH="$HOME/scripts:$PATH"
+# export PATH="$PATH:/Users/anikchand/.nvm/versions/node/v20.19.0/bin"
 # Add nvm-managed global bin to PATH (works when you nvm use different versions)
-export PATH="$PATH:$HOME/.nvm/versions/node/$(nvm version)/bin"
+# export PATH="$PATH:$HOME/.nvm/versions/node/$(nvm version)/bin"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql/bin:$PATH"
 
@@ -154,11 +165,8 @@ export PATH="/opt/homebrew/opt/mysql/bin:$PATH"
 # Added by Antigravity
 export PATH="/Users/anikchand/.antigravity/antigravity/bin:$PATH"
 
-# Added by Antigravity
-export PATH="/Users/anikchand/.antigravity/antigravity/bin:$PATH"
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/bin:$PATH"
-source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Don't try to complete if I haven't typed at least 2 characters
 zstyle ':autocomplete:*' min-input 2
 
